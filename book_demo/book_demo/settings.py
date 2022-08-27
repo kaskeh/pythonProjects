@@ -42,8 +42,9 @@ INSTALLED_APPS = [
 
     # demo add
     "rest_framework",
+    "corsheaders",  # 跨域处理
     "books",
-    "corsheaders",
+    'students' #
 ]
 
 MIDDLEWARE = [
