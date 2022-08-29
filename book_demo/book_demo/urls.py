@@ -22,4 +22,5 @@ urlpatterns = [
     path('api/', include("books.urls")),
     path('', TemplateView.as_view(template_name="index.html")),
     path('drf/', include('students.urls')),
+    path('ser/', include('ser.urls')),
 ]

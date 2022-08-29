@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",  # 跨域处理
     "books",
-    'students' #
+    'students',
+    'ser',
 ]
 
 MIDDLEWARE = [
