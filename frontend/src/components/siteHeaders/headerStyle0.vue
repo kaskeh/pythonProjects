@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="header">
     <b-container>
       <!-- 使用b-container进行包裹，使得原先占满整个宽度的情况，变得左右均有一定的距离-->
       <b-navbar toggleable="lg" type="dark" variant="info">
@@ -35,10 +35,10 @@
             <b-nav-item-dropdown right>
               <!-- Using 'button-content' slot -->
               <template #button-content>
-                <em>User</em>
+                <em>用户中心</em>
               </template>
-              <b-dropdown-item href="#">Profile</b-dropdown-item>
-              <b-dropdown-item href="#"></b-dropdown-item>
+              <b-dropdown-item href="login">登录</b-dropdown-item>
+              <b-dropdown-item href="#">注销</b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
         </b-collapse>
@@ -58,11 +58,10 @@ export default {
       headers: [],
     });
     GetCates().then(
-      (response) => (
-        console.log(response), (headData.headers = response.data.data)
-      )
+      (response) =>
+        // console.log(response),
+        (headData.headers = response.data.data)
     );
-
     return {
       headData,
     };

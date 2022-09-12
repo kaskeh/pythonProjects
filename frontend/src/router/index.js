@@ -1,11 +1,37 @@
 import { createRouter, createWebHistory } from "vue-router";
+// 小说站点页面
 import HomeView from "../views/HomeView.vue";
+import CateView from "../views/CateView.vue";
+// 用户相关页面
+import userHome from "../views/userViews/homeView.vue";
+import loginView from "../views/userViews/loginView.vue";
+import registerView from "../views/userViews/registerView.vue";
 
 const routes = [
   {
     path: "/",
-    name: "home",
+    name: "sitehome",
     component: HomeView,
+  },
+  {
+    path: "/:cate_id",
+    name: "Cate",
+    component: CateView,
+  },
+  {
+    path: "/userHome",
+    name: "userHome",
+    component: userHome,
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: loginView,
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: registerView,
   },
   // {
   //   path: "/about",
