@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -128,7 +128,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # 配置redis 数据库作为缓存后端
 CACHES = {
     # 默认的Redis配置项，采用0号Redis库
-    "default": { # 默认
+    "default": {  # 默认
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/0",
         "OPTIONS": {
@@ -136,7 +136,7 @@ CACHES = {
         }
     },
     # session存储机制,采用0号Redis库
-    "session": { # session
+    "session": {  # session
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/1",
         "OPTIONS": {
@@ -155,3 +155,46 @@ CACHES = {
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "session"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,  # 是否禁用已经存在的日志器
+    "formatters": {  # 日志信息显示的格式
+        "verbose": {  # levelname 日志级别，asctime 时间， module 模块， lineno 具体行， message输出信息
+            "format": "%(levelname) s%(asctime)s %(module)s %(lineno)d %(message)s"
+        },
+        "simple": {
+            "format": "%(levelname)s %(module)s %(lineno)d %(message)s"
+        },
+    },
+    "filters": {  # 对日志进行过滤
+        "require_debug_true": {  # django 在debug模式下才输出日志
+            '()': "django.utils.log.RequireDebugTrue",
+        },
+    },
+    "handlers": {  # 日志处理方式
+        "console": {  # 向终端中输出日志
+            "level": "INFO",
+            # "class": "logging.handlers.RotatingFileHandler",
+            "class": "logging.StreamHandler",
+            "filters": ["require_debug_true"],  # debug为true的时才向终端输出
+            "formatter": "simple"  # 即使用上面的配置
+        },
+        "file": {  # 向文件中输出日志，这里没有使用"filters"，即表明开发，生产环境都生产日志输出
+            "level": "INFO",
+            "class": "logging.handlers.RotatingFileHandler",
+            # "filename": os.path.join(os.path.dirname(BASE_DIR), "logs/meiduo.log"),  # 日志文件的位置
+            "filename": BASE_DIR.parent / "logs/meiduo.log",  # 日志文件的位置
+            "maxBytes": 300 * 1024 * 1024,  # 1024 * 1024即1M，这里配置了300M的日志输出空间额度
+            "backupCount": 10,
+            "formatter": "verbose"  # 即使用上面的属性信息格式配置
+        }
+    },
+    "loggers": {  # 日志器
+        "django": {  # 定义了一个名为django 的日志器, 和django结合起来使用，将django中之前的日志输出内容的时候，按照我们的日志配置进行输出
+            "handlers": ["console", "file"],  # 可以同时向终端与文件中输出日志,将来项目上线，把console去掉
+            "propagete": True,  # 是否继续传递日志信息
+            "level": "INFO",  # 日志器接收的最低日志级别
+        }
+    }
+}
