@@ -138,7 +138,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # 配置redis 数据库作为缓存后端
 CACHES = {
     # 默认的Redis配置项，采用0号Redis库
-    "default": {  # 默认
+    "default": {  # 默认 缓存省市区数据
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/0",
         "OPTIONS": {
@@ -146,21 +146,21 @@ CACHES = {
         }
     },
     # session存储机制,采用0号Redis库
-    "session": {  # session
+    "session": {  # 缓存session
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     },
-    # # 验证码的Redis配置项，采用2号Redis库
-    # "verify_codes": { # 验证码
-    #     "BACKEND": "django_redis.cache.RedisCache",
-    #     "LOCATION": "redis://127.0.0.1:6379/2",
-    #     "OPTIONS": {
-    #         "CLIENT_CLASS": "django_redis.client.DefaultClient",
-    #     }
-    # }
+    # 验证码的Redis配置项，采用2号Redis库
+    "verify_codes": { # 存储验证码
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/2",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
 }
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
