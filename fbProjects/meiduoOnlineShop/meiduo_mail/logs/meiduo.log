@@ -1,0 +1,24 @@
+INFO2022-10-15 00:58:08,134 autoreload 677 Watching for file changes with StatReloader
+INFO2022-10-15 00:58:26,447 basehttp 187 "GET / HTTP/1.1" 200 10681
+WARNING2022-10-15 00:58:26,558 log 241 Not Found: /favicon.ico
+WARNING2022-10-15 00:58:26,559 basehttp 187 "GET /favicon.ico HTTP/1.1" 404 2115
+INFO2022-10-15 01:00:03,495 autoreload 266 D:\testProEnv\gitPro\pythonProjets\fbProjects\meiduoOnlineShop\meiduo_mail\meiduo_mail\settings\dev.py changed, reloading.
+INFO2022-10-15 01:00:09,689 autoreload 677 Watching for file changes with StatReloader
+INFO2022-10-15 01:00:36,300 autoreload 266 D:\testProEnv\gitPro\pythonProjets\fbProjects\meiduoOnlineShop\meiduo_mail\meiduo_mail\settings\dev.py changed, reloading.
+INFO2022-10-15 01:00:36,793 autoreload 677 Watching for file changes with StatReloader
+INFO2022-10-15 01:00:42,376 autoreload 266 D:\testProEnv\gitPro\pythonProjets\fbProjects\meiduoOnlineShop\meiduo_mail\meiduo_mail\settings\dev.py changed, reloading.
+INFO2022-10-15 01:00:42,838 autoreload 677 Watching for file changes with StatReloader
+INFO2022-10-15 01:00:53,634 autoreload 266 D:\testProEnv\gitPro\pythonProjets\fbProjects\meiduoOnlineShop\meiduo_mail\meiduo_mail\settings\dev.py changed, reloading.
+INFO2022-10-15 01:00:54,108 autoreload 677 Watching for file changes with StatReloader
+INFO2022-10-15 01:00:57,540 autoreload 266 D:\testProEnv\gitPro\pythonProjets\fbProjects\meiduoOnlineShop\meiduo_mail\meiduo_mail\settings\dev.py changed, reloading.
+INFO2022-10-15 01:00:58,011 autoreload 677 Watching for file changes with StatReloader
+INFO2022-10-15 01:08:58,623 autoreload 266 D:\testProEnv\gitPro\pythonProjets\fbProjects\meiduoOnlineShop\meiduo_mail\meiduo_mail\settings\dev.py changed, reloading.
+INFO 2022-10-15 01:08:59,145 autoreload 677 Watching for file changes with StatReloader
+INFO 2022-10-15 01:09:05,608 basehttp 187 "GET / HTTP/1.1" 200 10681
+WARNING 2022-10-15 01:09:05,767 log 241 Not Found: /favicon.ico
+WARNING 2022-10-15 01:09:05,768 basehttp 187 "GET /favicon.ico HTTP/1.1" 404 2115
+INFO 2022-10-15 01:20:21,219 autoreload 266 D:\testProEnv\gitPro\pythonProjets\fbProjects\meiduoOnlineShop\meiduo_mail\meiduo_mail\settings\dev.py changed, reloading.
+INFO 2022-10-15 01:20:21,732 autoreload 677 Watching for file changes with StatReloader
+INFO 2022-10-15 01:20:35,742 autoreload 266 D:\testProEnv\gitPro\pythonProjets\fbProjects\meiduoOnlineShop\meiduo_mail\meiduo_mail\settings\dev.py changed, reloading.
+INFO 2022-10-15 01:20:36,234 autoreload 677 Watching for file changes with StatReloader
+INFO 2022-10-15 01:21:59,053 autoreload 677 Watching for file changes with StatReloader

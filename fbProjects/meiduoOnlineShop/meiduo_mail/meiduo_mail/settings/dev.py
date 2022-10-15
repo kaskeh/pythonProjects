@@ -161,7 +161,7 @@ LOGGING = {
     "disable_existing_loggers": False,  # 是否禁用已经存在的日志器
     "formatters": {  # 日志信息显示的格式
         "verbose": {  # levelname 日志级别，asctime 时间， module 模块， lineno 具体行， message输出信息
-            "format": "%(levelname) s%(asctime)s %(module)s %(lineno)d %(message)s"
+            "format": "%(levelname)s %(asctime)s %(module)s %(lineno)d %(message)s"
         },
         "simple": {
             "format": "%(levelname)s %(module)s %(lineno)d %(message)s"
@@ -198,3 +198,10 @@ LOGGING = {
         }
     }
 }
+
+# DRF 配置项
+REST_FRAMEWORK = {
+    # 异常处理
+    "EXCEPTION_HANDLER": "meiduo_mail.utils.exceptions.exception_handler",
+}
+
