@@ -11,11 +11,19 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-import os
+import os, sys
+import pathlib
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+# sys.path.insert(0, pathlib.Path.joinpath(pathlib.Path.cwd(), "apps"))
+# 追加系统的导报路径（目的：1，注册子应用时可以写的方便点. 2.修改django认证模型类时，必须以 应用名.模型名）
+# sys.path.insert(0, BASE_DIR / "apps")
+# 上面的拼接路径好像不适用
+sys.path.insert(0, os.path.join(BASE_DIR, "apps"))
+
+# print(sys.path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -39,6 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     "rest_framework",  # DRF
+    "users",  # 用户模块
+    # "users.apps.UsersConfig",  # 上面的写法和当前的均可 用户模块
 ]
 
 MIDDLEWARE = [
@@ -205,3 +215,5 @@ REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "meiduo_mail.utils.exceptions.exception_handler",
 }
 
+# 修改Django 认证系统的用户模型类
+AUTH_USER_MODEL = "users.User"
