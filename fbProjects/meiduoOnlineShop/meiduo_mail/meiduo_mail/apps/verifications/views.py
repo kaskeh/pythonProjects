@@ -16,16 +16,29 @@ class SMSCodeView(APIView):
     """ 短信验证码 """
 
     def get(self, request, mobile):
-        # 1. 生成验证码, 当不够6位时，自动补零
+
+        # 1. 创建redis连接对象
+        redis_conn = get_redis_connection("verify_codes")
+        # 2. 先从resid获取发送标记
+        send_flag = redis_conn.get("send_flag_%s" % mobile)
+
+        # 3. 如果取到了标记，说明此手机号频繁发验证码
+        if send_flag:
+            return Response({"message": "手机频繁发送短信"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # 4. 生成验证码, 当不够6位时，自动补零
         sms_code = "%06d" % randint(0, 999999)
         # 将验证码 输出在日志里，能够在没有 真实手机短信发送渠道时的测试手段
         logger.info(sms_code)
-        # 2. 创建redis连接对象
-        redis_conn = get_redis_connection("verify_codes")
-        # 3. 把验证码存储到redis 数据库  （键名， 存活时间，值）
+
+        # 5. 把验证码存储到redis 数据库  （键名， 存活时间，值）
         redis_conn.setex("sms_%s" % mobile, 300, sms_code)
-        # # 4. 利用容联运通讯发送短信验证码
+        # 6. 存储一个标记，表示此手机号已发送过短信，标记有效期期60s
+        redis_conn.setex("send_flag_%s" % mobile, 60, 1)
+
+        # # 7. 利用容联运通讯发送短信验证码
         # # CCP().send_template_sms(self, 手机号, [验证码, 5], 1)
         # CCP().send_template_sms(mobile, [sms_code, 5], 1)
-        # 5. 响应
+
+        # 8. 响应
         return Response({"message": "ok"}, status=status.HTTP_200_OK)
