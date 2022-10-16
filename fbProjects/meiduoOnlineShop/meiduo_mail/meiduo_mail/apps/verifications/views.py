@@ -3,6 +3,7 @@ from random import randint
 from django_redis import get_redis_connection
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
 import logging
 
 # from meiduo_mail.libs.yuntongxun.sms import CCP
@@ -27,4 +28,4 @@ class SMSCodeView(APIView):
         # # CCP().send_template_sms(self, 手机号, [验证码, 5], 1)
         # CCP().send_template_sms(mobile, [sms_code, 5], 1)
         # 5. 响应
-        return Response({"message": "ok"})
+        return Response({"message": "ok"}, status=status.HTTP_200_OK)

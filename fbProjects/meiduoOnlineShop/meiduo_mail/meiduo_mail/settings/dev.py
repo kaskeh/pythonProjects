@@ -34,7 +34,11 @@ SECRET_KEY = 'django-insecure-ukpv2cv_n5y2=emx6ob@^$uq$2ar2u$v*cg!ve)t8p$*ngl^y9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1",
+                 "localhost",
+                 "www.meiduo.com",
+                 "api.meiduo.com",
+                 ]
 
 # Application definition
 
@@ -47,11 +51,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     "rest_framework",  # DRF
+    "corsheaders",  # 解决跨域CORS
     "users",  # 用户模块
     # "users.apps.UsersConfig",  # 上面的写法和当前的均可 用户模块
 ]
 
+# 中间件 自上而下 进入中间件
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -87,7 +94,7 @@ WSGI_APPLICATION = 'meiduo_mail.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
-        'HOST': '192.168.112.129',  # 数据库主机
+        'HOST': '192.168.112.130',  # 数据库主机
         'PORT': 3306,  # 数据库端口
         'USER': 'meiduo',  # 数据库用户名root
         'PASSWORD': "meiduo",  # 数据库用户密码
@@ -154,7 +161,7 @@ CACHES = {
         }
     },
     # 验证码的Redis配置项，采用2号Redis库
-    "verify_codes": { # 存储验证码
+    "verify_codes": {  # 存储验证码
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/2",
         "OPTIONS": {
@@ -217,3 +224,13 @@ REST_FRAMEWORK = {
 
 # 修改Django 认证系统的用户模型类
 AUTH_USER_MODEL = "users.User"
+
+# CORS组的配置信息 追加白名单
+CORS_ORIGIN_WHITELIST = (
+    'http://127.0.0.1:8080',
+    'http://localhost:8080',
+    'http://www.meiduo.com:8080',
+    'http://api.meiduo.com:8080',
+)
+
+CORS_ALLOW_CREDENTIALS = True  # 允许ajax跨域请求时携带cookie
