@@ -17,6 +17,7 @@ class SMSCodeView(APIView):
     def get(self, request, mobile):
         # 1. 生成验证码, 当不够6位时，自动补零
         sms_code = "%06d" % randint(0, 999999)
+        # 将验证码 输出在日志里，能够在没有 真实手机短信发送渠道时的测试手段
         logger.info(sms_code)
         # 2. 创建redis连接对象
         redis_conn = get_redis_connection("verify_codes")
