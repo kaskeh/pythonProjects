@@ -19,4 +19,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("verifications.urls")),  # 发短信模块
+    path('', include("users.urls")),  # 用户模块
 ]
