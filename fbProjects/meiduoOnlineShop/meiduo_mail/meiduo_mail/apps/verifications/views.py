@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 import logging
+from celery_tasks.sms.tasks import send_sms_code
 
 # from meiduo_mail.libs.yuntongxun.sms import CCP
 from . import constants
@@ -52,6 +53,10 @@ class SMSCodeView(APIView):
         # # CCP().send_template_sms(self, 手机号, [验证码, 5], 1)
         # CCP().send_template_sms(mobile, [sms_code, 5], 1)
         # CCP().send_template_sms(mobile, [sms_code, constants.SMS_CODE_REDIS_EXPIRES // 60], 1)
+
+        # 触发异步任务，将异步任务添加到celery 任务队列broker
+        # send_sms_code(mobile, sms_code)  # 调用普通函数而已
+        send_sms_code.delay(mobile, sms_code)  # 触发异步任务
 
         # 8. 响应
         return Response({"message": "ok"}, status=status.HTTP_200_OK)
