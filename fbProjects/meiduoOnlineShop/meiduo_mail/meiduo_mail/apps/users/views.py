@@ -17,13 +17,28 @@ class UserView(CreateAPIView):
 
 class UsernameCountView(APIView):
     """ 判断用户输入的名称是否已注册过"""
-    def get(self, username):
+    def get(self, request, username):
         # 查询user表
         count = User.objects.filter(username=username).count()
 
         # 包装响应数据
         data = {
             "username": username,
+            "count": count
+        }
+
+        # 响应
+        return Response(data)
+
+class MobileCountView(APIView):
+    """ 判断用户输入的手机号是否已注册过"""
+    def get(self, request, mobile):
+        # 查询user表
+        count = User.objects.filter(mobile=mobile).count()
+
+        # 包装响应数据
+        data = {
+            "mobile": mobile,
             "count": count
         }
 
