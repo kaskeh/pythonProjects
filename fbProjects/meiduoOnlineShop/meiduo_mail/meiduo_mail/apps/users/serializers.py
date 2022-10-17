@@ -9,7 +9,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
     # 序列化器的所有字段：["id", "username", "password", "password2", "mobile", "sms_code", "allow"]
     # 需要校验的字段：["username", "password", "password2", "mobile", "sms_code", "allow"]
-    # 模型中已存在的字段：["username", "password", "mobile"]
+    # 模型中已存在的字段：["id", "username", "password", "mobile"]
 
     # 需要序列化(即向前端传输的数据内容)的字段： ["id", "username", "mobile"]
     # 需要反序列化(前端传来的数据内容)的字段： ["username", "password", "password2", "mobile", "sms_code", "allow"]
@@ -65,7 +65,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
         # 向redis存储数据时都是已字符串进行存储，但取出数据是bytes类型 [bytes]
 
         # 先判断能不能从数据库获得验证码，后再判断是不是一致
-        if real_sms_code is None or attrs["sms_code"] != real_sms_code.decode("utf-8"):
+        if real_sms_code is None or attrs["sms_code"] != real_sms_code.decode():
             raise serializers.ValidationError("验证码错误")
 
         return attrs
