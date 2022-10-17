@@ -18,17 +18,37 @@ var vm = new Vue({
 		sms_code: '',
 		allow: false,
 		sms_code_tip: "获取短信验证码", // a 标签默认文字
-		error_sms_code_message: ""  // 验证码错误提示信息
+		error_sms_code_message: "",  // 验证码错误提示信息
+		error_name_message: "",
 	},
 	methods: {
-		check_username: function (){
-			var len = this.username.length;
-			if(len<5||len>20) {
-				this.error_name = true;
-			} else {
-				this.error_name = false;
-			}
-		},
+		// 检查⽤户名
+        check_username: function (){
+            var len = this.username.length;
+            if(len<5||len>20) {
+                this.error_name_message = '请输⼊5-20个字符的⽤户名';
+                this.error_name = true;
+            } else {
+                this.error_name = false;
+            }
+            // 检查重名
+            if (this.error_name == false) {
+                axios.get(this.host + '/usernames/' + this.username + '/count/', {
+                    responseType: 'json'
+                })
+                .then(response => {
+                    if (response.data.count > 0) {
+                         this.error_name_message = '⽤户名已存在';
+                         this.error_name = true;
+                    } else {
+                        this.error_name = false;
+                    }
+                })
+                 .catch(error => {
+                    console.log(error.response.data);
+                })
+            }
+        },
 		check_pwd: function (){
 			var len = this.password.length;
 			if(len<8||len>20){
