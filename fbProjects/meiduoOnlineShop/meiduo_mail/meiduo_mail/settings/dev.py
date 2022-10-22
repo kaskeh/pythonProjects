@@ -11,9 +11,10 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-import os, sys
-import pathlib
+import os
+import sys
 from pathlib import Path
+from datetime import timedelta  # 导入datetime库生成时间参数
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     "rest_framework",  # DRF
+    "rest_framework_simplejwt",  # JWT 认证
     "corsheaders",  # 解决跨域CORS
     "users",  # 用户模块
     # "users.apps.UsersConfig",  # 上面的写法和当前的均可 用户模块
@@ -220,6 +222,11 @@ LOGGING = {
 REST_FRAMEWORK = {
     # 异常处理
     "EXCEPTION_HANDLER": "meiduo_mail.utils.exceptions.exception_handler",
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),   # 设置token有效时间 1天
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # 刷新token有效时间
 }
 
 # 修改Django 认证系统的用户模型类

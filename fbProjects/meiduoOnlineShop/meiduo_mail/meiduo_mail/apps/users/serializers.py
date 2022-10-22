@@ -1,7 +1,12 @@
+import logging
+
 from rest_framework import serializers
+from rest_framework_simplejwt.tokens import Token
 from .models import User
 import re
 from django_redis import get_redis_connection
+
+from meiduo_mail.utils.token import Create_token
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
@@ -11,17 +16,18 @@ class CreateUserSerializer(serializers.ModelSerializer):
     # 需要校验的字段：["username", "password", "password2", "mobile", "sms_code", "allow"]
     # 模型中已存在的字段：["id", "username", "password", "mobile"]
 
-    # 需要序列化(即向前端传输的数据内容)的字段： ["id", "username", "mobile"]
+    # 需要序列化(即向前端传输的数据内容)的字段： ["id", "username", "mobile", "token"]
     # 需要反序列化(前端传来的数据内容)的字段： ["username", "password", "password2", "mobile", "sms_code", "allow"]
     # 模型中没有的需要新定义，write_only为True 标识 password2只会反序列化
     password2 = serializers.CharField(label="确认密码", write_only=True)
     sms_code = serializers.CharField(label="验证码", write_only=True)
     allow = serializers.CharField(label="同意协议", write_only=True)  # 约定前端会传来 "true" "false"
+    token = serializers.CharField(label="token", read_only=True)
 
     class Meta:
         model = User  # 从User 模型中映射序列化器字段
         # fields = "__all__"  直接使用数据库所有字段
-        fields = ["id", "username", "password", "password2", "mobile", "sms_code", "allow"]
+        fields = ["id", "username", "password", "password2", "mobile", "sms_code", "allow", "token"]
         extra_kwargs = {  # 修改字段限制选项
             "username": {
                 "min_length": 5,
@@ -32,6 +38,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
                 }
             },
             "password": {
+                'write_only': True,
                 "min_length": 8,
                 "max_length": 20,
                 "error_messages": {
@@ -59,7 +66,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("两个密码不一致")
 
         # 校验验证码
-        redis_conn = get_redis_connection("verify_code")
+        redis_conn = get_redis_connection("verify_codes")
         mobile = attrs["mobile"]
         real_sms_code = redis_conn.get("sms_%s" % mobile)
         # 向redis存储数据时都是已字符串进行存储，但取出数据是bytes类型 [bytes]
@@ -83,5 +90,9 @@ class CreateUserSerializer(serializers.ModelSerializer):
         user = User(**validated_data)
         user.set_password(password)  # 把密码加密后再赋值给user的password 属性
         user.save()  # 存储到数据库
+
+        token = Create_token.get_token(user)
+
+        user.token = token
 
         return user

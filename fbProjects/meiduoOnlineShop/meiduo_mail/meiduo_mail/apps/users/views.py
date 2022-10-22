@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from .serializers import CreateUserSerializer
 from .models import User
 
+
 # Create your views here.
 
 
@@ -13,10 +14,12 @@ class UserView(CreateAPIView):
     """ 用户注册 """
     # 指定序列化器
     serializer_class = CreateUserSerializer
+    # queryset = User.objects.all()
 
 
 class UsernameCountView(APIView):
     """ 判断用户输入的名称是否已注册过"""
+
     def get(self, request, username):
         # 查询user表
         count = User.objects.filter(username=username).count()
@@ -30,8 +33,10 @@ class UsernameCountView(APIView):
         # 响应
         return Response(data)
 
+
 class MobileCountView(APIView):
     """ 判断用户输入的手机号是否已注册过"""
+
     def get(self, request, mobile):
         # 查询user表
         count = User.objects.filter(mobile=mobile).count()
