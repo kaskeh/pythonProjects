@@ -2,9 +2,14 @@ from django.urls import path, re_path
 
 from . import views
 
+
 urlpatterns = [
     # 注册用户
     path("users/", views.UserView.as_view()),
+    # 用户JWT登录
+    path("authorizations/", views.MyTokenObtainPairView.as_view()),
+    # 获取用户详情
+    path("user/", views.UserDetailView.as_view()),
     # 判断用户名是否已注册
     re_path(r"^usernames/(?P<username>\w{5,20})/count/$", views.UsernameCountView.as_view()),
     # 判断手机号是否已注册

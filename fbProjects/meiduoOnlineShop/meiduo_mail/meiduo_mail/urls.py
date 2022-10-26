@@ -15,9 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # 用于获取token
+    path('api/token/', TokenObtainPairView.as_view()),
+    # 用于刷新token
+    path('api/token/refresh/', TokenRefreshView.as_view()),
     path('', include("verifications.urls")),  # 发短信模块
     path('', include("users.urls")),  # 用户模块
 ]

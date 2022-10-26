@@ -222,6 +222,13 @@ LOGGING = {
 REST_FRAMEWORK = {
     # 异常处理
     "EXCEPTION_HANDLER": "meiduo_mail.utils.exceptions.exception_handler",
+
+    # 认证
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        'rest_framework_simplejwt.authentication.JWTStatelessUserAuthentication',  # jwt认证类，放在第一位是默认项
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    )
 }
 
 SIMPLE_JWT = {
@@ -241,3 +248,8 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 CORS_ALLOW_CREDENTIALS = True  # 允许ajax跨域请求时携带cookie
+
+# 修改django 用户认证后端类
+AUTHENTICATION_BACKENDS = (
+    'users.utils.UsernameMobileAuthBackend',
+)

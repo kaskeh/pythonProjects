@@ -1,3 +1,4 @@
+
 from django.shortcuts import render
 from random import randint
 from django_redis import get_redis_connection
