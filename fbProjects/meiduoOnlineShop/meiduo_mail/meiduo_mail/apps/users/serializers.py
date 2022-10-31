@@ -8,7 +8,7 @@ import re
 from django_redis import get_redis_connection
 
 from meiduo_mail.utils.token import Create_token
-
+from celery_tasks.email.tasks import send_verify_email
 
 class CreateUserSerializer(serializers.ModelSerializer):
     """ 注册序列化器 """
@@ -126,3 +126,27 @@ class UserDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "username", "mobile", "email", "email_active"]
+
+class EmailSerializer(serializers.ModelSerializer):
+    """ 更新邮箱序列化器 """
+    class Meta:
+        model = User
+        fields = ["id", "email"]
+        extra_kwargs = {
+            "email": {
+                "required": True  # 模型中字段是可以为空的，但我们反序列化要求有
+            }
+        }
+
+    def update(self, instance, validated_data):
+        """ 重写此方法的真正目的不是为了修改，而是借用此时机，发激活邮箱 """
+        # super().update(instance, validated_data)
+
+        instance.email = validated_data['email']
+        instance.save()
+
+        # 将来需要在此继续写发邮箱的功能
+        verify_url = instance.generate_email_vertify_url()
+        send_verify_email.delay(instance.email, verify_url=verify_url)
+
+        return instance

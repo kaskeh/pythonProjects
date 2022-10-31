@@ -96,7 +96,7 @@ WSGI_APPLICATION = 'meiduo_mail.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
-        'HOST': '192.168.112.130',  # 数据库主机
+        'HOST': '192.168.112.133',  # 数据库主机
         'PORT': 3306,  # 数据库端口
         'USER': 'meiduo',  # 数据库用户名root
         'PASSWORD': "meiduo",  # 数据库用户密码
@@ -232,7 +232,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),   # 设置token有效时间 1天
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),  # 设置token有效时间 1天
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # 刷新token有效时间
 }
 
@@ -253,3 +253,13 @@ CORS_ALLOW_CREDENTIALS = True  # 允许ajax跨域请求时携带cookie
 AUTHENTICATION_BACKENDS = (
     'users.utils.UsernameMobileAuthBackend',
 )
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # django 全局设置中也为该通样配置，可以不再进行配置
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 25  # 全局同样
+# 发送邮件的邮箱
+EMAIL_HOST_USER = '2945002921@qq.com'
+# 在邮箱中设置的客户端授权密码
+EMAIL_HOST_PASSWORD = 'wsuzkmoqrjffdcha'
+# 收件⼈看到的发件⼈
+EMAIL_FROM = '2945002921@qq.com'
