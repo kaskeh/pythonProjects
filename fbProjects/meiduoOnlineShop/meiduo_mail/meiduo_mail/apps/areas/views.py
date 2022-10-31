@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework.mixins import ListModelMixin
 
@@ -37,7 +37,9 @@ from .serializers import AreaSerializer, SubSerializer
 #         # 3. 响应
 #         return Response(serializer.data)
 
-class AreaListView(ListModelMixin, GenericAPIView):
+
+class AreaListView(ListAPIView):
+# class AreaListView(ListModelMixin, GenericAPIView):
     """ 查询所有省 """
 
     # 指定序列化器
@@ -45,18 +47,18 @@ class AreaListView(ListModelMixin, GenericAPIView):
     # 指定查询集
     queryset = Area.objects.filter(parent=None)
 
-    def get(self, request):
-
-        # # 1. 获取指定的查询集
-        # # qs = Area.objects.filter(parent=None)
-        # qs = self.get_queryset()
-        # # 2. 创建序列化器进行序列化
-        # # serializer = AreaSerializer(qs, many=True)
-        # serializer = self.get_serializer(qs, many=True)
-        # # 3. 响应
-        # return Response(serializer.data)
-
-        return self.List(request)
+    # def get(self, request):
+    #
+    #     # # 1. 获取指定的查询集
+    #     # # qs = Area.objects.filter(parent=None)
+    #     # qs = self.get_queryset()
+    #     # # 2. 创建序列化器进行序列化
+    #     # # serializer = AreaSerializer(qs, many=True)
+    #     # serializer = self.get_serializer(qs, many=True)
+    #     # # 3. 响应
+    #     # return Response(serializer.data)
+    #
+    #     return self.List(request)
 
 
 class AreaDetailView(APIView):
