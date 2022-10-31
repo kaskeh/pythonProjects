@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.generics import GenericAPIView, ListAPIView
+from rest_framework.generics import GenericAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.mixins import ListModelMixin
 
@@ -61,16 +61,22 @@ class AreaListView(ListAPIView):
     #     return self.List(request)
 
 
-class AreaDetailView(APIView):
+class AreaDetailView(RetrieveAPIView):
+# class AreaDetailView(APIView):
     """ 查询单一省或市 """
 
-    def get(self, request, pk):
-        # 1. 根据pk 查询出指定的省或市
-        try:
-            area = Area.objects.get(id=pk)
-        except Area.DoesNotExist:
-            return Response({"message": "无效pk"}, status=status.HTTP_400_BAD_REQUEST)
-        # 2. 创建序列化器进行序列化
-        serializer = SubSerializer(area)
-        # 3. 响应
-        return Response(serializer.data)
+    # 指定序列化器
+    serializer_class = SubSerializer
+    # 指定查询集
+    queryset = Area.objects.all()
+
+    # def get(self, request, pk):
+    #     # 1. 根据pk 查询出指定的省或市
+    #     try:
+    #         area = Area.objects.get(id=pk)
+    #     except Area.DoesNotExist:
+    #         return Response({"message": "无效pk"}, status=status.HTTP_400_BAD_REQUEST)
+    #     # 2. 创建序列化器进行序列化
+    #     serializer = SubSerializer(area)
+    #     # 3. 响应
+    #     return Response(serializer.data)
