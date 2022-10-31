@@ -42,7 +42,7 @@ class User(AbstractUser):
         url = "http://www.meiduo.com:8080/success_verify_email.html?token=" + token.decode()
         return url
 
-    @statcimethod
+    @staticmethod
     def check_verify_email_token(token):
         """ 对 token解密并查询对应的user """
         # 1. 创建加密序列化器

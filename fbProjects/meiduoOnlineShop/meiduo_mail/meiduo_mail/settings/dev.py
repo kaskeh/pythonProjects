@@ -54,8 +54,10 @@ INSTALLED_APPS = [
     "rest_framework",  # DRF
     "rest_framework_simplejwt",  # JWT 认证
     "corsheaders",  # 解决跨域CORS
+
     "users",  # 用户模块
     # "users.apps.UsersConfig",  # 上面的写法和当前的均可 用户模块
+    "areas.apps.AreasConfig"
 ]
 
 # 中间件 自上而下 进入中间件
