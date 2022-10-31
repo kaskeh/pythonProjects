@@ -28,4 +28,5 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view()),
     path('', include("verifications.urls")),  # 发短信模块
     path('', include("users.urls")),  # 用户模块
+    path('', include("areas.urls")),  # 省市区模块
 ]
