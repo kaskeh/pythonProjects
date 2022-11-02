@@ -44,7 +44,17 @@ class FastDFSStorage(Storage):
         return file_id
 
     def exists(self, name):
-        pass
+        """
+        当要进行上传时都调用此方法判断文件是否上传，如果没有上传才会调用save方法进行上传
+        :param name:    要上传的文件名
+        :return:    True(表示文件已存在，不需要上传) False(文件不存在，需要上传)
+        """
+        return False
 
     def url(self, name):
-        pass
+        """
+        当要访问图片时，就会调用此方法获取图片文件的绝对路径
+        :param name: 要访问图片的file_id
+        :return: 完整的图片访问路径：storage_server ip:8888 + file_id
+        """
+        return "http://192.168.112.134:8888/" + name
