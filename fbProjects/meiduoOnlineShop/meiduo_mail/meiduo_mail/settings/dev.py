@@ -233,6 +233,13 @@ REST_FRAMEWORK = {
     )
 }
 
+REST_FRAMEWORK_EXTENSIONS = {
+    # 缓存时间 单位为秒
+    "DEFAULT_CACHE_RESPONSE_TIMEOUT": 60 * 60,
+    # 缓存存储，缓存的存储方式，与配置文件中 CACHES 的键对应
+    "DEFAULT_USE_CACHE": "default",
+}
+
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),  # 设置token有效时间 1天
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # 刷新token有效时间
