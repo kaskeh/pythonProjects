@@ -276,3 +276,6 @@ EMAIL_FROM = '2945002921@qq.com'
 # FastDFS
 FDFS_BASE_URL = "http://192.168.112.134:8888/"
 FDFS_CLIENT_CONF = "meiduo_mail/utils/fastdfs/client.conf"
+
+# django 文件存储
+DEFAULT_FILE_STORAGE = "meiduo_mail.utils.fastdfs.fdfs_storage.FastDFSStorage"
