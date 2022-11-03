@@ -1,5 +1,6 @@
 from django.core.files.storage import Storage
 from fdfs_client.client import Fdfs_client, get_tracker_conf
+from django.conf import settings
 
 
 class FastDFSStorage(Storage):
@@ -25,7 +26,8 @@ class FastDFSStorage(Storage):
         """
 
         # 1. 创建FastDFS 客户端
-        tracker_path = get_tracker_conf('meiduo_mail/utils/fastdfs/client.conf')
+        # tracker_path = get_tracker_conf('meiduo_mail/utils/fastdfs/client.conf')
+        tracker_path = get_tracker_conf(settings.FDFS_CLIENT_CONF)
         client = Fdfs_client(tracker_path)
 
         # 2. 通过客户端调用上传文件的方式上传文件到fastDFS服务器
@@ -57,4 +59,5 @@ class FastDFSStorage(Storage):
         :param name: 要访问图片的file_id
         :return: 完整的图片访问路径：storage_server ip:8888 + file_id
         """
-        return "http://192.168.112.134:8888/" + name
+        # return "http://192.168.112.134:8888/" + name
+        return settings.FDFS_BASE_URL + name

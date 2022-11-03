@@ -272,3 +272,7 @@ EMAIL_HOST_USER = '2945002921@qq.com'
 EMAIL_HOST_PASSWORD = 'wsuzkmoqrjffdcha'
 # 收件⼈看到的发件⼈
 EMAIL_FROM = '2945002921@qq.com'
+
+# FastDFS
+FDFS_BASE_URL = "http://192.168.112.134:8888/"
+FDFS_CLIENT_CONF = "meiduo_mail/utils/fastdfs/client.conf"
